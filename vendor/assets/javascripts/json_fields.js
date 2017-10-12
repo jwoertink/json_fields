@@ -7,7 +7,7 @@ $(function() {
     if(typeof template === "undefined" || template === "") {
       return false;
     }
-    r = new RegExp('#' + $(this).data('target') + "\\[(\\d+)\\]", "g");
+    r = new RegExp($(this).data('target') + "\\[(\\d+)\\]", "g");
     current_num = parseInt(r.exec(template)[1]);
     new_template = template.replace(r, $(this).data('target')+'['+(current_num+1)+']');
     $new_row = $('<div class="row template">'+new_template+'</div>');

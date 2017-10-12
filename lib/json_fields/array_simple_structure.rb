@@ -7,11 +7,15 @@ module JsonFields
     # returns the HTML template to be used
     def template(object_name, method, options)
       obj = options[:object]
-      content_tag(:div, id: [object_name, method, 'json_field'].join('_')) do
-        html = content_tag(:a, 'Add Field', href: '#', class: 'btn btn-add add-json-fields', 'data-target' => [object_name, method, 'json_field'].join('_'))
-        Array(obj.send(method)).collect { |value|
+      id = [object_name, method, 'json_field'].join('_')
+
+      content_tag(:div, id: id) do
+        html = content_tag(:a, 'Add Field', href: '#', class: 'btn btn-add add-json-fields', 'data-target' => id)
+        Array(obj.send(method)).collect.with_index { |value, idx|
           html += content_tag(:div, class: 'template ' + options.delete(:wrapper_class)) do
-            text_field_tag("#{object_name}[#{method}][]", nil, value: value, class: 'json-field-control') 
+            [text_field_tag("#{object_name}[#{method}][]", nil, value: value, class: 'json-field-control', id: nil, name: "#{id}[#{idx}]"),
+             content_tag(:a, '-', href: '#', class: 'btn btn-remove remove-json-fields')
+            ].join.html_safe
           end
         }
         html.html_safe
