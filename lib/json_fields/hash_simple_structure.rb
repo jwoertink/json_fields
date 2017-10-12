@@ -1,4 +1,4 @@
 module JsonFields
-  class HashSimpleStructure
+  class HashSimpleStructure < BaseStructure
   end
 end

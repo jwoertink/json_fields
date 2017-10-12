@@ -4,7 +4,6 @@ module JsonFields
     JsonFields::ApplicationHelper.instance_methods.each do |selector|
       src = <<-CODE
         def #{selector}(method, options = {})
-          puts "\n\n ***FORM BUILDER*** \n\n"
           @template.send(#{selector.inspect}, @object_name, method, objectify_options(options))
         end
       CODE
