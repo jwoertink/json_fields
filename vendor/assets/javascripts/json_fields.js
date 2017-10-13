@@ -17,7 +17,7 @@ $(function() {
 
   // Remove the fields from the form
   $(document).on('click', '.remove-json-fields', function() {
-    $(this).parents('.row.template:first').remove();
+    $(this).parents('.template:first').remove();
     return false;
   });
 });
