@@ -12,8 +12,8 @@ module JsonFields
       content_tag(:div, id: id) do
         html = content_tag(:a, 'Add Field', href: '#', class: 'btn btn-add add-json-fields', 'data-target' => id)
         Array(obj.send(method)).collect.with_index { |value, idx|
-          html += content_tag(:div, class: 'template ' + options.delete(:wrapper_class)) do
-            [text_field_tag("#{object_name}[#{method}][]", nil, value: value, class: 'json-field-control', id: nil, name: "#{object_name}[#{method}_json_field][]"),
+          html += content_tag(:div, class: ['template', options.delete(:wrapper_class)].compact.join(' ')) do
+            [text_field_tag("#{object_name}[#{method}][]", nil, value: value, class: 'json-field-control', id: nil, name: "#{object_name}[#{method}][]"),
              content_tag(:a, '-', href: '#', class: 'btn btn-remove remove-json-fields')
             ].join.html_safe
           end
