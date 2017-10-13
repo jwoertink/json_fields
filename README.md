@@ -23,6 +23,7 @@ The first is the name of the attribute, and the second is a configuration string
 
 **NOTE:** There's only 2 supported options for the configuration string currently. `Array(Simple)` and `Hash(Simple)`. See [Configurations](#configurations) for more details.
 
+In your model:
 ```ruby
 class User < ApplicationRecord
   json_field :settings, "Hash(Simple)"
@@ -31,6 +32,7 @@ end
 
 Next, in your form you'll use the `json_field`.
 
+In your view:
 ```
 = form_for(@user) do |f|
   = f.label(:settings)
@@ -38,6 +40,14 @@ Next, in your form you'll use the `json_field`.
   = f.submit('Save', class: 'btn')
 ```
 
+In your controller:
+```ruby
+def user_params
+  params.require(:user).permit(settings_json_field: [])
+end
+```
+
+The params should be named by whatever the attribute is with `_json_field` at the end. Be sure to permit these so you can save the changes made.
 
 ## Configurations
 
