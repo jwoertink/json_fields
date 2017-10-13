@@ -2,6 +2,8 @@
 
 This gem adds a simple UI to your form when you're dealing with [Postgres JSON](https://www.postgresql.org/docs/9.6/static/datatype-json.html). 
 
+Works with Rails 5.0+ (It probably works on 4.2 series as well, I just haven't tried it yet)
+
 
 ## Installation
 
@@ -43,11 +45,9 @@ In your view:
 In your controller:
 ```ruby
 def user_params
-  params.require(:user).permit(settings_json_field: [])
+  params.require(:user).permit(settings: [])
 end
 ```
-
-The params should be named by whatever the attribute is with `_json_field` at the end. Be sure to permit these so you can save the changes made.
 
 ## Configurations
 
