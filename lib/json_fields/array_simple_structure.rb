@@ -22,5 +22,10 @@ module JsonFields
       end
 
     end
+
+    # Takes in values and returns a normal structure that can be saved
+    def assemble(values)
+      values
+    end
   end
 end
