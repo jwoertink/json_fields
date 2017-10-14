@@ -7,5 +7,9 @@ module JsonFields
     def template(object_name, method, options)
       raise "template must be defined in the subclass"
     end
+
+    def assemble(values)
+      raise "assemble must be defined in the subclass"
+    end
   end
 end

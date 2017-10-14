@@ -29,6 +29,7 @@ In your model:
 ```ruby
 class User < ApplicationRecord
   json_field :settings, "Hash(Simple)"
+  json_field :likes, "Array(Simple)"
 end
 ```
 
@@ -37,15 +38,19 @@ Next, in your form you'll use the `json_field`.
 In your view:
 ```
 = form_for(@user) do |f|
-  = f.label(:settings)
-  = f.json_field(:settings, class: 'form-control')
+  div
+    = f.label(:settings)
+    = f.json_field(:settings, class: 'form-control', wrapper_class: 'row')
+  div
+    = f.label(:likes)
+    = f.json_field(:likes, class: 'form-control', wrapper_class: 'row')
   = f.submit('Save', class: 'btn')
 ```
 
 In your controller:
 ```ruby
 def user_params
-  params.require(:user).permit(settings: [])
+  params.require(:user).permit(settings: {}, likes: [])
 end
 ```
 
