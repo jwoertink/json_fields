@@ -7,7 +7,7 @@ module JsonFields
 
       content_tag(:div, id: id) do
         html = content_tag(:a, 'Add Field', href: '#', class: 'btn btn-add add-json-fields', 'data-target' => id)
-        Hash(obj.send(method)).collect.with_index { |(key, value), idx|
+        Hash(obj.send(method)).merge({""=>""}).collect.with_index { |(key, value), idx|
           html += content_tag(:div, class: ['template', options.delete(:wrapper_class)].compact.join(' ')) do
             [
               text_field_tag("#{object_name}[#{method}][key][]", nil, value: key, class: 'json-field-control', id: nil),
@@ -22,7 +22,13 @@ module JsonFields
     end
 
     def assemble(values)
-      Hash[values[:key].zip(values[:value])]
+      if allow_blank
+        Hash[values[:key].zip(values[:value])]
+      else
+        keys = values[:key].delete_if(&:blank?)
+        vals = values[:value].delete_if(&:blank?)
+        Hash[keys.zip(vals)]
+      end
     end
   end
 end
