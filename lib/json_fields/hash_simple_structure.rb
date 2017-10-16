@@ -21,13 +21,19 @@ module JsonFields
 
     end
 
+    # {key: [], value: []} assemble this
+    # {"a" => 1} passthrough this
     def assemble(values)
-      if allow_blank
-        Hash[values[:key].zip(values[:value])]
+      if values.is_a?(Hash) && (values.keys & [:key, :value]).any?
+        if allow_blank
+          Hash[values[:key].zip(values[:value])]
+        else
+          keys = values[:key].delete_if(&:blank?)
+          vals = values[:value].delete_if(&:blank?)
+          Hash[keys.zip(vals)]
+        end
       else
-        keys = values[:key].delete_if(&:blank?)
-        vals = values[:value].delete_if(&:blank?)
-        Hash[keys.zip(vals)]
+        values
       end
     end
   end
